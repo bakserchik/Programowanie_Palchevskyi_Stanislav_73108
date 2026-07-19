@@ -211,11 +211,16 @@ form.addEventListener("submit", function(e){
         poprawny=false;
     }
 
-    if(poprawny){
-        alert("Formularz został poprawnie wypełniony");
+    if(!dlugosc(telefon, 9)){
+        pokazBlad("errTelefon", "Numer telefonu musi mieć minimum 9 znaków");
+        poprawny = false;
     }
 
-});
+    if(poprawny){
+        alert("Sukces! Film oraz formularz zostały pomyślnie dodane i zatwierdzone.");
+    }
+
+    });
 
 document.getElementById("telefon")
 .addEventListener("input", function(){
