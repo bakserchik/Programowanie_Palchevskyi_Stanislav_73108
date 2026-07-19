@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Lab 6</title>
+</head>
+
+<body>
+
+<h1>Lab 6 JavaScript</h1>
+
+<script>
+
+// Zadanie 1
+let tablica = [];
+
+for(let i = 0; i < 10; i++){
+    let liczba = Number(prompt("Podaj liczbę"));
+    tablica.push(liczba);
+}
+
+console.log(tablica);
+
+let szukana = Number(prompt("Jakiej liczby szukać?"));
+
+let licznik = 0;
+
+for(let liczba of tablica){
+    if(liczba === szukana){
+        licznik++;
+    }
+}
+
+console.log("Liczba wystąpień: " + licznik);
+
+
+// Zadanie 2
+let liczby = [1,2,3,4,5,6];
+
+let nowa = Number(prompt("Podaj nową liczbę"));
+let index = Number(prompt("Podaj index"));
+
+liczby.splice(index,0,nowa);
+
+console.log(liczby);
+
+
+// Zadanie 3
+let tekst = prompt("Podaj tekst");
+
+let odwrocony = tekst.split("").reverse().join("");
+
+console.log(odwrocony);
+
+
+// Zadanie 4
+function losoweLiczby(){
+
+    let arr = [];
+
+    for(let i = 0; i < 10; i++){
+        arr.push(Math.floor(Math.random()*100));
+    }
+
+    return arr;
+}
+
+let wynik = losoweLiczby();
+
+document.write("<h2>Losowe liczby</h2>");
+
+for(let x of wynik){
+    document.write(x + "<br>");
+}
+
+
+// Zadanie 5
+let nums = [1,2,3,4,5,6];
+
+let suma = nums.reduce((a,b)=>a+b,0);
+console.log("Suma:", suma);
+
+let parzyste = nums.filter(x=>x%2===0);
+console.log("Parzyste:", parzyste);
+
+let razy3 = nums.map(x=>x*3);
+console.log("Razy 3:", razy3);
+
+nums.push(123456);
+
+console.log(nums.indexOf(123456));
+
+let srednia = suma / nums.length;
+console.log("Średnia:", srednia);
+
+let max = Math.max(...nums);
+console.log("Największa:", max);
+
+let ile = nums.filter(x=>x===2).length;
+console.log("Ilość 2:", ile);
+
+
+// Zadanie 6
+function sumaNajwiekszych(arr){
+
+    arr.sort((a,b)=>b-a);
+
+    return arr[0] + arr[1];
+}
+
+console.log(sumaNajwiekszych([5,9,2,7]));
+
+
+// Zadanie 7
+function usunDuplikaty(arr){
+
+    return [...new Set(arr)];
+}
+
+console.log(usunDuplikaty([1,1,2,3,3,4]));
+
+
+// Zadanie 8
+let ksiazki = [
+    "Harry Potter",
+    "Wiedźmin",
+    "Harry Potter",
+    "Pan Tadeusz"
+];
+
+let unikalne = new Set(ksiazki);
+
+console.log(unikalne);
+console.log("Ilość:", unikalne.size);
+
+
+// Zadanie 9
+function unikalneZnaki(txt){
+
+    return new Set(txt.split(""));
+}
+
+console.log(unikalneZnaki("javascript"));
+
+
+// Zadanie 10
+let words = ["kot","pies","kot","dom","pies","kot"];
+
+let mapa = new Map();
+
+for(let word of words){
+
+    if(mapa.has(word)){
+        mapa.set(word, mapa.get(word)+1);
+    }else{
+        mapa.set(word,1);
+    }
+}
+
+console.log(mapa);
+
+
+// Zadanie 11
+let ksiazkaAdresowa = new Map();
+
+ksiazkaAdresowa.set("Jan","123456789");
+ksiazkaAdresowa.set("Anna","987654321");
+
+ksiazkaAdresowa.forEach((telefon,imie)=>{
+
+    console.log(imie + ": " + telefon);
+});
+
+
+// Zadanie 12
+let queue = [];
+
+queue.push("Klient 1");
+queue.push("Klient 2");
+queue.push("Klient 3");
+
+console.log(queue.shift());
+console.log(queue.shift());
+
+
+// Zadanie 13
+function nawiasy(txt){
+
+    let stack = [];
+
+    for(let znak of txt){
+
+        if(znak === "("){
+            stack.push(znak);
+        }
+
+        if(znak === ")"){
+
+            if(stack.length === 0){
+                return false;
+            }
+
+            stack.pop();
+        }
+    }
+
+    return stack.length === 0;
+}
+
+console.log(nawiasy("(())"));
+console.log(nawiasy("(()"));
+
+</script>
+
+</body>
+</html>

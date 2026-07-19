@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadanie 7</title>
+</head>
+<body>
+
+<input type="number" id="count" placeholder="Ilość rekordów">
+<button onclick="generateUsers()">Generuj</button>
+
+<div id="result"></div>
+
+<script>
+function generateUsers() {
+
+    const names = ["Jan", "Anna", "Piotr", "Kasia", "Tomek"];
+    const surnames = ["Nowak", "Kowalski", "Mazur", "Lis", "Wiśniewski"];
+
+    const count = document.getElementById("count").value;
+
+    let html = "";
+
+    for (let i = 0; i < count; i++) {
+
+        const user = {
+            name: names[Math.floor(Math.random() * names.length)],
+            surname: surnames[Math.floor(Math.random() * surnames.length)],
+            age: Math.floor(Math.random() * 46) + 5,
+            phone: Math.floor(Math.random() * 3000001) + 5000000
+        };
+
+        html += `
+        <p>
+        ${user.name}
+        ${user.surname}
+        ${user.age}
+        ${user.phone}
+        </p>`;
+    }
+
+    document.getElementById("result").innerHTML = html;
+}
+</script>
+
+</body>
+</html>

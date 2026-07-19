@@ -1,0 +1,12 @@
+<input id="temp" type="number">
+<button onclick="konwertuj('CtoF')">C -> F</button>
+<button onclick="konwertuj('FtoC')">F -> C</button>
+<p id="wynik"></p>
+
+<script>
+function konwertuj(typ) {
+    let t = parseFloat(document.getElementById("temp").value);
+    let wynik = (typ === 'CtoF') ? (t * 9/5 + 32) : ((t - 32) * 5/9);
+    document.getElementById("wynik").textContent = wynik.toFixed(2);
+}
+</script>

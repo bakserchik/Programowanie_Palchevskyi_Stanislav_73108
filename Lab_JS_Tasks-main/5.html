@@ -1,0 +1,9 @@
+<div id="mojElement">Tekst do ukrycia</div>
+<button onclick="toggle()">Ukryj/Pokaż</button>
+
+<script>
+function toggle() {
+    let el = document.getElementById("mojElement");
+    el.style.display = (el.style.display === "none") ? "block" : "none";
+}
+</script>

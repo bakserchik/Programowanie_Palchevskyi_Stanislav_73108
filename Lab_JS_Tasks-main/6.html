@@ -1,0 +1,12 @@
+<input type="text" id="tekst">
+<button onclick="dodaj()">Dodaj</button>
+<ul id="lista"></ul>
+
+<script>
+function dodaj() {
+    let val = document.getElementById("tekst").value;
+    let li = document.createElement("li");
+    li.textContent = val;
+    document.getElementById("lista").appendChild(li);
+}
+</script>
