@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formularz</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    padding:20px;
+}
+
+form{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+}
+
+input,select{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+}
+
+.error{
+    color:red;
+    font-size:12px;
+}
+
+button{
+    margin-top:15px;
+    padding:10px;
+}
+</style>
+
+</head>
+<body>
+
+<form id="formularz">
+
+<label>Imię</label>
+<input type="text" id="imie">
+<div class="error" id="errImie"></div>
+
+<label>Nazwisko</label>
+<input type="text" id="nazwisko">
+<div class="error" id="errNazwisko"></div>
+
+<label>Email</label>
+<input type="text" id="email">
+<div class="error" id="errEmail"></div>
+
+<label>Hasło</label>
+<input type="password" id="haslo">
+<div class="error" id="errHaslo"></div>
+
+<label>Powtórz hasło</label>
+<input type="password" id="haslo2">
+<div class="error" id="errHaslo2"></div>
+
+<label>Płeć</label>
+<select id="plec">
+    <option value="">Wybierz</option>
+    <option>Kobieta</option>
+    <option>Mężczyzna</option>
+</select>
+
+<label>Telefon</label>
+<input type="text" id="telefon">
+<div class="error" id="errTelefon"></div>
+
+<label>Data urodzenia</label>
+<input type="date" id="data">
+<div class="error" id="errData"></div>
+
+<label>Kraj</label>
+<select id="kraj">
+    <option value="">Wybierz kraj</option>
+    <option value="Polska">Polska</option>
+    <option value="Niemcy">Niemcy</option>
+    <option value="Ukraina">Ukraina</option>
+</select>
+
+<label>Województwo</label>
+<select id="wojewodztwo" disabled>
+</select>
+
+<label>Adres zamieszkania</label>
+<input type="text" id="adres" disabled>
+
+<label>
+<input type="checkbox"
+id="adresCheck"
+checked>
+Adres korespondencyjny jest taki sam
+</label>
+
+<div id="korespondencyjnyBox" style="display:none">
+<label>Adres korespondencyjny</label>
+<input type="text" id="adresKor">
+</div>
+
+<button type="submit">Zapisz</button>
+
+</form>
+
+<script>
+
+const form = document.getElementById("formularz");
+
+function czyPuste(value){
+    return value.trim() !== "";
+}
+
+function dlugosc(value,min){
+    return value.length >= min;
+}
+
+function emailPoprawny(email){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function mocneHaslo(haslo){
+    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/.test(haslo);
+}
+
+function pelnoletni(data){
+    let dzis = new Date();
+    let ur = new Date(data);
+
+    let wiek = dzis.getFullYear() - ur.getFullYear();
+
+    if(
+        dzis.getMonth() < ur.getMonth() ||
+        (dzis.getMonth() === ur.getMonth() &&
+        dzis.getDate() < ur.getDate())
+    ){
+        wiek--;
+    }
+
+    return wiek >= 18;
+}
+
+function pokazBlad(id,msg){
+    document.getElementById(id).textContent = msg;
+}
+
+function wyczysc(){
+    document.querySelectorAll(".error")
+    .forEach(el => el.textContent = "");
+}
+
+form.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    wyczysc();
+
+    let poprawny = true;
+
+    let imie = document.getElementById("imie").value;
+    let nazwisko = document.getElementById("nazwisko").value;
+    let email = document.getElementById("email").value;
+    let haslo = document.getElementById("haslo").value;
+    let haslo2 = document.getElementById("haslo2").value;
+    let telefon = document.getElementById("telefon").value;
+    let data = document.getElementById("data").value;
+
+    if(!czyPuste(imie)){
+        pokazBlad("errImie","Podaj imię");
+        poprawny=false;
+    }
+
+    if(!czyPuste(nazwisko)){
+        pokazBlad("errNazwisko","Podaj nazwisko");
+        poprawny=false;
+    }
+
+    if(!emailPoprawny(email)){
+        pokazBlad("errEmail","Niepoprawny email");
+        poprawny=false;
+    }
+
+    if(!mocneHaslo(haslo)){
+        pokazBlad(
+        "errHaslo",
+        "Min. 8 znaków, wielka litera i cyfra");
+        poprawny=false;
+    }
+
+    if(haslo !== haslo2){
+        pokazBlad(
+        "errHaslo2",
+        "Hasła nie są identyczne");
+        poprawny=false;
+    }
+
+    if(!pelnoletni(data)){
+        pokazBlad(
+        "errData",
+        "Musisz mieć minimum 18 lat");
+        poprawny=false;
+    }
+
+    if(poprawny){
+        alert("Formularz został poprawnie wypełniony");
+    }
+
+});
+
+document.getElementById("telefon")
+.addEventListener("input", function(){
+
+    this.value = this.value.replace(/\D/g,"");
+
+});
+
+const kraj = document.getElementById("kraj");
+const woj = document.getElementById("wojewodztwo");
+const adres = document.getElementById("adres");
+
+kraj.addEventListener("change", function(){
+
+    woj.disabled = false;
+
+    if(this.value === "Polska"){
+
+        woj.outerHTML =
+        `
+        <select id="wojewodztwo">
+            <option>Podkarpackie</option>
+            <option>Małopolskie</option>
+            <option>Mazowieckie</option>
+            <option>Śląskie</option>
+        </select>
+        `;
+    }
+    else{
+
+        woj.outerHTML =
+        `
+        <input type="text"
+        id="wojewodztwo"
+        placeholder="Wpisz region">
+        `;
+    }
+
+});
+
+document.addEventListener("change", function(e){
+
+    if(e.target.id === "wojewodztwo"){
+        adres.disabled = false;
+    }
+
+});
+
+document.getElementById("adresCheck")
+.addEventListener("change", function(){
+
+    const box =
+    document.getElementById("korespondencyjnyBox");
+
+    if(this.checked){
+        box.style.display = "none";
+    }
+    else{
+        box.style.display = "block";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

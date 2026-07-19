@@ -1,0 +1,10 @@
+<button class="btn" onclick="zmienKolor(this)">Przycisk 1</button>
+<button class="btn" onclick="zmienKolor(this)">Przycisk 2</button>
+<button class="btn" onclick="zmienKolor(this)">Przycisk 3</button>
+
+<script>
+function zmienKolor(el) {
+    document.querySelectorAll('.btn').forEach(b => b.style.backgroundColor = "");
+    el.style.backgroundColor = "yellow";
+}
+</script>
